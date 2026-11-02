@@ -69,14 +69,36 @@ void arr_out(int* arr, int n) {
 	}
 }
 int main() {
+	int type_arr;
+	cout << "enter type of arr. dinamic = 1, static = 2\n";
+	if (!(cin >> type_arr)) {
+		cout << "error is not a number\n";
+		return 0;
+	}
+	if (type_arr > 2 && type_arr < 1) {
+		cout << "error. write 1 or 2\n";
+		return 0;
+	}
 	int n;
-	cout << "enter number of elements in arr\n";
+	cout << "enter number of elements in arr(for static is 100)\n";
 	cin >> n;
 	if (n < 0) {
 		cout << "error";
 		return 0;
 	}
-	int* arr = new int[n] {};
+	int* arr = nullptr;
+	if (type_arr == 1) {
+		arr = new int[n] {};
+	}
+	if (type_arr == 2) {
+		const int MAX_SIZE = 100;
+		int static_arr[MAX_SIZE];
+		if (n > MAX_SIZE) {
+			cout << "error. Max size is 100\n";
+			return 0;
+		}
+		arr = static_arr;
+	}
 	cout << "enter elements of arr\n";
 	enter_el_of_arr(arr,n);
 	cout << "number of min(max of all minimal) element = " << num_of_min_el_array(arr,n) << "\nsum of elements between first and last negative numbers = " << sum_between_first_and_last_negative_el_of_arr(arr,n) << "\nenter X\n";
@@ -86,9 +108,27 @@ int main() {
 	cout << "new arr : ";
 	arr_out(arr, n);
 	cout << '\n';
-	delete[] arr;
+	if (type_arr == 1) {
+		delete[] arr;
+	}
 	// second task with random elements
-	int* arr_rnd = new int[n]{};
+	int* arr_rnd = nullptr;
+	if (type_arr == 1) {
+		arr_rnd = new int[n] {};
+	}
+	if (type_arr == 2) {
+		const int MAX_SIZE = 100;
+		int static_arr[MAX_SIZE];
+		if (n > MAX_SIZE) {
+			cout << "error. Max size is 100\n";
+			return 0;
+		}
+		arr_rnd = static_arr;
+	}
+	if (arr_rnd == nullptr) {
+		cout << "error. pointer is null\n";
+		return 0;
+	}
 	int a, b;
 	cout << "enter a,b\n";
 	cin >> a >> b;
@@ -104,6 +144,8 @@ int main() {
 	cout << "new (random)arr : ";
 	arr_out(arr_rnd, n);
 	cout << '\n';
-	delete[] arr_rnd;
+	if (type_arr == 1) {
+		delete[] arr_rnd;
+	}
 	return 0;
 }
