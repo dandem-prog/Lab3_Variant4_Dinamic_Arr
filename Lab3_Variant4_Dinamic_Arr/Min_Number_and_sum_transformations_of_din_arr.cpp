@@ -18,10 +18,9 @@ int num_of_min_el_array(int* arr,int n) {
 	++min_n;
 	return min_n;
 }
-int sum_between_first_and_last_negative_el_of_arr(int *arr,int n) {
+int first_neg_pos_in_arr(int* arr,int n) {
 	int first_negative = 0;
 	int first_neg_num = 0;
-	int sum = 0;
 	for (int32_t i = 0; i < n; ++i) {
 		if (arr[i] < first_negative) {
 			first_negative = arr[i];
@@ -29,6 +28,9 @@ int sum_between_first_and_last_negative_el_of_arr(int *arr,int n) {
 			break;
 		}
 	}
+	return first_neg_num;
+}
+int last_neg_pos_in_arr(int* arr,int n) {
 	int last_negative = 0;
 	int last_neg_num = 0;
 	for (int32_t i = 0; i < n; ++i) {
@@ -37,7 +39,11 @@ int sum_between_first_and_last_negative_el_of_arr(int *arr,int n) {
 			last_neg_num = i;
 		}
 	}
-	for (int32_t i = first_neg_num + 1; i < last_neg_num; ++i) sum += arr[i];
+	return last_neg_num;
+}
+int sum_between_first_and_last_negative_el_of_arr(int *arr,int n) {
+	int sum = 0;
+	for (int32_t i = first_neg_pos_in_arr(arr,n) + 1; i < last_neg_pos_in_arr(arr,n); ++i) sum += arr[i];
 	return sum;
 }
 void enter_el_of_arr(int* arr, int n) {
